@@ -1,0 +1,25 @@
+version: '2.5'
+
+services:
+    simp:
+        build: ./service
+        volumes:
+            - type: bind
+              source: ./service/ro
+              target: /home/nb/ictf-framework/ictf-framework/test_service/simp/ro
+              read_only: true
+            - type: bind
+              source: ./service/rw
+              target: /home/nb/ictf-framework/ictf-framework/test_service/simp/rw
+            - type: bind
+              source: ./service/append
+              target: /home/nb/ictf-framework/ictf-framework/test_service/simp/append
+	    - ./src/default /etc/nginx/sites-available/default
+	    - ./src/web.sql ./src/sql
+		
+        ports:
+        - 8443:443
+        - 8080:80
+
+    scripts:
+      build: ./script

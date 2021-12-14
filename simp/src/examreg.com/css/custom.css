@@ -1,0 +1,26 @@
+/**
+ * Định dạng kiểu mẫu cho giá trị không hợp lệ
+ */
+:not(output):-moz-ui-invalid {
+    box-shadow: 0 0 0 0;
+}
+
+:not(output):-moz-ui-invalid:-moz-focusring {
+    box-shadow: 0 0 0 0;
+}
+
+#main {
+    margin: 20px;
+}
+
+body, input {
+    background-color: #f4f4f4;
+}
+
+.even, th {
+    background-color: white;
+}
+
+strong {
+    text-transform: uppercase;
+}
