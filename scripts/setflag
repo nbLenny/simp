@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+
+import mysql.connector
+import traceback
+import json
+import sys
+
+
+def set_flag(ip, port, flag):
+	mydb = mysql.connector.connect(
+		host=ip,
+		user="out_test",
+		password="123456",
+		database="web"
+	)
+
+	mycursor = mydb.cursor()
+	flag_edit = '"' + flag + '"'
+
+	#sql = "INSERT INTO monthi (idsv, Flag) SELECT id, dudieukienduthi  from sinhvien WHERE dudieukienduthi = 1"
+	sql2 = 'UPDATE monthi SET tenmonthi = %s WHERE monthi.Flag = 1' % (flag_edit)
+
+	#mycursor.execute(sql)
+	mycursor.execute(sql2, flag)
+
+	sql3 =  "SELECT idsv FROM monthi WHERE Flag = 1"
+
+	mycursor.execute(sql3)
+
+	nope_char = "(),''"
+	tmp = ""
+	flag_id = mycursor.fetchall()
+	for a in flag_id:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+	
+	flag_id_edit =   str(a) 
+	flag_id = flag_id_edit
+	sql4 = 'SELECT Flag FROM monthi WHERE idsv = %s' % (flag_id_edit)
+
+	mycursor.execute(sql4)
+	token = mycursor.fetchall()
+	tmp2 = ""
+	for a in token:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+
+	token_edit = a
+
+	mydb.commit()
+	
+	response['payload'] = {
+		'flag_id': flag_id,
+		'secret_token': token_edit,
+	}
+	return response
+
+if __name__ == "__main__":
+	try:
+		print (json.dumps(set_flag(sys.argv[1], int(sys.argv[2]), sys.argv[3])))
+	except Exception as e:
+		response = {
+			"error": True,
+			"payload": str(e) + "\n" + traceback.format_exc()
+		}
+		print (json.dumps(response))
+

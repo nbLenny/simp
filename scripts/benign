@@ -1,0 +1,154 @@
+#!/usr/bin/env python
+
+import mysql.connector
+import random
+import sys
+import traceback
+import json
+
+def benign_000(r):
+
+	mydb = mysql.connector.connect(
+		host=ip,
+		user="out_test",
+		password="123456",
+		database="web"
+	)
+	mycursor = mydb.cursor()
+
+	nope_char = "()," 
+
+	sql1 = "SELECT ngaysinh FROM sinhvien"
+	mycursor.execute(sql1)
+	rel1 = mycursor.fetchall()
+	rel1_ed = []
+	for a in rel1:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+		rel1_ed.append(a)		
+	
+
+	sql2 = "SELECT hodem FROM sinhvien"
+	mycursor.execute(sql2)
+	rel2 = list(mycursor.fetchall())
+	rel2_ed = []
+	for a in rel2:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+		rel2_ed.append(a)		
+	
+
+	sql3 = "SELECT ten FROM sinhvien"
+	mycursor.execute(sql3)
+	rel3 =list(mycursor.fetchall())
+	rel3_ed = []
+	for a in rel3:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+		rel3_ed.append(a)		
+
+	sql4 = "INSERT INTO sinhvien (id, hodem, ten, ngaysinh) VALUES ( %s, %s, %s, %s)" % ("'" + str(random.randrange(17021000,17029999)) + "'",random.choice(rel2_ed), random.choice(rel3_ed), random.choice(rel1_ed))
+	
+	mycursor.execute(sql4)
+	mydb.commit()
+	
+	
+
+def benign_001(r):
+
+	mydb = mysql.connector.connect(
+		host=ip,
+		user="out_test",
+		password="123456",
+		database="web"
+	)
+	mycursor = mydb.cursor()
+
+	tenmon = ["xyz","pen","qwe","rty","poi"]
+
+	sql = "INSERT INTO monthi (idsv, tenmonthi) VALUES ( %s, %s)" % ("'" + str(random.randrange(17020000,170219999)) + "'", "'" + str(random.choice(tenmon)) + "'")
+	mycursor.execute(sql)
+	mydb.commit()
+
+def benign_002(r):
+	mydb = mysql.connector.connect(
+		host=ip,
+		user="out_test",
+		password="123456",
+		database="web"
+	)
+	mycursor = mydb.cursor() 
+
+	sql1 = "SELECT idsv FROM monthi WHERE Flag != '1' "
+	mycursor.execute(sql1)
+	rel1 = mycursor.fetchall()
+	rel1_ed = []
+	nope_char = "(),"
+	for a in rel1:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+		rel1_ed.append(a)	
+
+
+	sql1 = "DELETE FROM monthi WHERE idsv = %s " %(str(random.choice(rel1_ed)))
+	mycursor.execute(sql1)
+
+	sql2 = "SELECT id FROM sinhvien WHERE dudieukienduthi != '1'"
+	mycursor.execute(sql2)
+	rel2 = mycursor.fetchall()
+	rel2_ed = []
+	nope_char = "(),''"
+	for a in rel2:
+		a = str(a)
+		for c in nope_char:
+			a = a.replace(c, "")
+		rel2_ed.append(a)
+
+	print(rel2_ed)
+
+	sql2 = "DELETE FROM sinhvien WHERE id = %s " % (str(random.choice(rel2_ed)))
+	mycursor.execute(sql2)
+
+	mydb.commit()
+
+def benign(r):
+
+    response  = {
+        "error": int(not all(results)),
+        "error_msg" : "",
+        "payload": {},
+    }
+
+    for _ in range(15):
+
+        r = remote(ip, port)
+
+        # Add benign behaviors in this array if you want to add some.
+        BENIGN_BEHAVIORS = [benign_000, benign_001, benign_002]
+
+        bb_index = random.randint(0,len(BENIGN_BEHAVIORS)-1)
+        bb_func = BENIGN_BEHAVIORS[bb_index]
+        bb_func(r)
+
+    return response
+
+if __name__ == "__main__":
+    try:
+        print (json.dumps(benign(sys.argv[1], int(sys.argv[2]))))
+    except Exception as e:
+        response = {
+            "error": True,
+            "payload": str(e) + "\n" + traceback.format_exc()
+        }
+        print (json.dumps(response))
+
+
+
+
+
+
+	
