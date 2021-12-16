@@ -1,7 +1,7 @@
 <?php
     session_start();
     if($_SESSION["isAdmin"] != 1){
-        header("Location:http://examreg.com/account/view/LogoutView.php");
+        header("Location:http://127.0.0.1:8080/account/view/LogoutView.php");
     }
 ?>
 <html lang="en">

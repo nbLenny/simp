@@ -13,30 +13,38 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN sed -i 's|http://archive.ubuntu.com|http://vn.archive.ubuntu.com|g' /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y python python-pip nginx php-fpm php-mysql mysql-server 
+RUN apt-get update && apt-get install -y  nginx php-fpm php-mysql mysql-server 
 #RUN echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" | debconf-set-selections
 #RUN echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect" | debconf-set-selections
 #RUN echo "phpmyadmin phpmyadmin/dbconfig-install boolean false" | debconf-set-selections
 
 
 
-RUN pip install mysql-connector
+#RUN pip install mysql-connector
 
 COPY web.sql /docker-entrypoint-initdb.d
 ADD web.sql /docker-entrypoint-initdb.d
 RUN mkdir /usr/sql
 RUN chmod 644 /usr/sql
 ADD ["web.sql", "/usr/sql/web.sql"]
+
+ADD ["default","/etc/nginx/sites-enabled/default" ]
+
+ADD ["hosts","/etc/hosts" ]
+#RUN echo "127.0.0.1	examreg.com" >> /etc/hosts
+#RUN sed -i "s|127.0.0.1	localhost|127.0.0.1	examreg.com |g" /etc/hosts
+
 RUN service mysql stop
 
-RUN service nginx start
+
 #RUN sed -i "s|bind-address|#bind-address |g" /etc/mysql/mysql.conf.d/mysqld.cnf 
 #RUN mysql  --port 3306 --protocol=tcp -u root
 RUN service mysql start && sleep 10 && \
 mysql -e "USE mysql;" && \
  mysql -e "CREATE USER 'out_test'@'%' IDENTIFIED BY '123456';GRANT ALL PRIVILEGES ON *.* TO 'out_test'@'%';" &&\
  mysql -e "CREATE DATABASE web;" && \
- mysql web < /usr/sql/web.sql
+ mysql web < /usr/sql/web.sql 
+RUN chown mysql:mysql /var/run/mysqld
 
 RUN ln -s /usr/share/phpmyadmin /var/www/html
 
@@ -50,5 +58,17 @@ RUN service php7.2-fpm start && sleep 10
 #RUN   echo "            fastcgi_pass unix:/run/php/php7.2-fpm.sock;" >> /etc/nginx/sites-available/default
 #RUN   echo "    }" >> /etc/nginx/sites-available/default
 
-RUN service nginx start
+ADD ["avai_examreg.com", "/etc/nginx/sites-available/examreg.com"]
+#ADD ["ena_examreg.com", "/etc/nginx/sites-enabled/examreg.com"]
+#ADD ["nginx.conf", "/etc/nginx/nginx.conf"]
+#RUN sed -i "s|#	server_names_hash_bucket_size 64 |server_names_hash_bucket_size 64 |g" /etc/nginx/nginx.conf
 
+#RUN rm /etc/nginx/sites-enabled/default
+
+RUN useradd -m --uid 31337 chall
+WORKDIR /home/chall
+ADD start.sh /home/chall/
+
+RUN chmod +x ./start.sh
+
+ENTRYPOINT ./start.sh

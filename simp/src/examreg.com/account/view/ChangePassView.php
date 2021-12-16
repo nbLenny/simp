@@ -3,7 +3,7 @@ session_start();
 require_once dirname(__FILE__)."/../controller/LogoutController.php";
 require_once dirname(__FILE__)."/../controller/ChangePassController.php";
 if(!isset($_SESSION["isAdmin"])){
-    header("Location:http://examreg.com/account/view/LogoutView.php");
+    header("Location:http://127.0.0.1:8080/account/view/LogoutView.php");
 }
 if(isset($_POST['changePass'])){ // upon submiting form , this will work
     $controller = new ChangePassController();

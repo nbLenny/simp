@@ -1,0 +1,43 @@
+import socket
+import sys
+import pexpect
+import pexpect.fdpexpect
+
+def get_flag(ip, port, flag_id, token):
+    # We read that note, knowing the password (in other words, we're benign traffic)
+    # Whatever the patch, this must still work!
+    note_id = flag_id
+    password = token
+
+    # Interaction with the service
+    # Try to be robust, services will not always answer immediately
+    conn = socket.create_connection((ip,port))
+    c = pexpect.fdpexpect.fdspawn(conn.fileno())
+
+    c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("You are.*Facebook")
+    c.expect("Want to \(R\)ead or \(W\)rite a twit?") # Note: these are RegExps!
+
+    c.sendline("R")
+
+    c.expect("Please type: twit_id password")
+    c.sendline("{} {}".format(note_id, password))
+
+    c.expect("Note content: ")
+    c.expect("\n"); content = c.before.strip()
+    c.close()
+    conn.close()
+
+    error = 0
+    error_msg = ""
+
+    return {'error': error,
+            'error_msg': error_msg,
+            'payload': {
+                'flag': content
+                }
+            }
+
+
+if __name__ == "__main__":
+    print(json.dumps(get_flag(sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4])))

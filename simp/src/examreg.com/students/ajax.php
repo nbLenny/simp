@@ -2,7 +2,7 @@
     // Kiểm tra session
     session_start();
     if($_SESSION["isAdmin"] != 1){
-        header("Location:http://examreg.com/");
+        header("Location:http://127.0.0.1:8080/");
     }
 
     header("Content-type:application/json"); // Set kiểu trả về dưới dạng JSON

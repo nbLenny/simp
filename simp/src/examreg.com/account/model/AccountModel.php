@@ -36,7 +36,7 @@ class AccountModel extends PDOData {
         session_start();
         // Xóa mọi biến trong SESSION
         session_destroy();
-        header("Location:http://examreg.com/");
+        header("Location:http://127.0.0.1:8080/");
     }
 
     /**

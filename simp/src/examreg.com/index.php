@@ -11,9 +11,9 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 // Kiểm tra session
 if($_SESSION["id"] != ""){
     if($_SESSION["isAdmin"] == 1){ // Nếu là admin thì đưa về menu admin
-        header('Location: http://examreg.com/admin/view/AdminView.php');
+        header('Location: http://127.0.0.1:8080/admin/view/AdminView.php');
     }else if($_SESSION["isAdmin"] == 0){ // Nếu là sinh viên thì đưa về menu sinh viên
-        header('Location: http://examreg.com/sinhvien');
+        header('Location: http://127.0.0.1:8080/sinhvien');
     }
 }
 

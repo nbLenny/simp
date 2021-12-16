@@ -2,9 +2,9 @@
 session_start();
 if($_SESSION["id"] != ""){
     if($_SESSION["isAdmin"] == 1){
-        header('Location: http://examreg.com/admin/view/AdminView.php');
+        header('Location: http://127.0.0.1:8080/admin/view/AdminView.php');
     }else if($_SESSION["isAdmin"] == 0){
-        header('Location: http://examreg.com/student/view/StudentView.php');
+        header('Location: http://127.0.0.1:8080/student/view/StudentView.php');
     }
 }
 
@@ -41,10 +41,10 @@ class LoginController {
                     $_SESSION["id"] = $ID; // making session
                     $_SESSION["isAdmin"] = $isAdmin;// making session
                     if($isAdmin == 1){
-                        header("Location: http://examreg.com/admin/view/AdminView.php");
+                        header("Location: http://127.0.0.1:8080/admin/view/AdminView.php");
                     }else if ($isAdmin == 0){
-                        /*header("Location: http://examreg.com/student/view/StudentView.php");*/
-                        header("Location: http://examreg.com/sinhvien");
+                        /*header("Location: http://127.0.0.1:8080/student/view/StudentView.php");*/
+                        header("Location: http://127.0.0.1:8080/sinhvien");
                     }
 
                 }else{

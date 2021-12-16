@@ -1,19 +1,21 @@
-version: '2.5'
+version: '3.2'
 
 services:
-    simp:
-        image: simp
+    tweety_bird:
+        build: ./service
         volumes:
             - type: bind
               source: ./service/ro
-              target: /home/chall/service/simp/ro
+              target: /home/chall/service/ro
               read_only: true
             - type: bind
               source: ./service/rw
-              target: /home/chall/service/simp/rw
+              target: /home/chall/service/rw
             - type: bind
               source: ./service/append
-              target: /home/chall/service/simp/append
+              target: /home/chall/service/append
         ports:
-        - "8080:6666"
+        - 1909:1909
         restart: always
+    scripts:
+      build: ./scripts

@@ -2,7 +2,7 @@
     // Kiểm tra session xem có phải là admin không. Nếu có thì trả về homepage.
     session_start();
     if($_SESSION["isAdmin"] == 1 || !isset($_SESSION["id"])){
-        header("Location:http://examreg.com/");
+        header("Location:http://127.0.0.1:8080/");
     }
 
     header("Content-type:application/json"); // Set kiểu trả về dưới dạng JSON

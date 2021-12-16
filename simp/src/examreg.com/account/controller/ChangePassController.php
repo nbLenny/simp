@@ -24,12 +24,12 @@ class ChangePassController{
 
     public function returnOption(){
         if($_SESSION["isAdmin"] == 1){
-            echo "<a href=\"http://examreg.com/admin/view/AdminView.php\" ><img src = \"/css/img/smallhome.png\">Trang chủ</a>
-    <a href=\"http://examreg.com/monthi/\"><img src = \"/css/img/smallbook.png\">Môn thi</a>
-    <a href=\"http://examreg.com/hocphan/\"><img src = \"/css/img/smallglass.png\">Học phần</a>
-    <a href=\"http://examreg.com/kythi/\"><img src = \"/css/img/term.png\">Kỳ thi</a>
-    <a href=\"http://examreg.com/quanlyphongthi/\"><img src = \"/css/img/lamp.png\">Phòng thi</a>
-    <a href=\"http://examreg.com/admin/getStudentIndex/\"><img src = \"/css/img/smallStudent.png\">Quản lí học viên</a>";
+            echo "<a href=\"http://127.0.0.1:8080/admin/view/AdminView.php\" ><img src = \"/css/img/smallhome.png\">Trang chủ</a>
+    <a href=\"http://127.0.0.1:8080/monthi/\"><img src = \"/css/img/smallbook.png\">Môn thi</a>
+    <a href=\"http://127.0.0.1:8080/hocphan/\"><img src = \"/css/img/smallglass.png\">Học phần</a>
+    <a href=\"http://127.0.0.1:8080/kythi/\"><img src = \"/css/img/term.png\">Kỳ thi</a>
+    <a href=\"http://127.0.0.1:8080/quanlyphongthi/\"><img src = \"/css/img/lamp.png\">Phòng thi</a>
+    <a href=\"http://127.0.0.1:8080/admin/getStudentIndex/\"><img src = \"/css/img/smallStudent.png\">Quản lí học viên</a>";
         }else if($_SESSION["isAdmin"] == 0){
             echo "<a  href=\"/sinhvien/home\"><img src = \"/css/img/smallhome.png\">Trang chủ</a>
                       <a  href='/sinhvien/dangkythi'><img src = \"/css/img/register.png\">Đăng ký thi</a>

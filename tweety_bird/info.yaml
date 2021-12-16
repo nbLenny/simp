@@ -1,0 +1,6 @@
+service_name: tweety_bird
+type: console
+description: Tweet backup storage service in C.
+flag_id_description: Flags are identified by the twit_id.
+apt_dependencies: 
+    - sl

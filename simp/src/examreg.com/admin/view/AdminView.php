@@ -4,7 +4,7 @@ require_once dirname(__FILE__)."/../../account/controller/LogoutController.php";
 session_start();
 
 if($_SESSION["isAdmin"] != 1){
-    header("Location:http://examreg.com/account/view/LogoutView.php");
+    header("Location:http://127.0.0.1:8080/account/view/LogoutView.php");
 }
 ?>
 <!DOCTYPE html>
@@ -84,34 +84,34 @@ if($_SESSION["isAdmin"] != 1){
 <!---<section id="boxes">
     <div class="container">
         <div class="box">
-            <a href="http://examreg.com/students/"><img src="/css/img/graduate-student.png"></a>
+            <a href="http://127.0.0.1:8080/students/"><img src="/css/img/graduate-student.png"></a>
             <h3>Quản lý sinh viên</h3>
             <p>Trang quản lý danh sách sinh viên, cấp tài khoản, cập nhật trạng thái đủ điều kiện dự thi</p>
         </div>
         <div class="box">
-            <a href="http://examreg.com/monthi/"><img src="/css/img/microscope.png"></a>
+            <a href="http://127.0.0.1:8080/monthi/"><img src="/css/img/microscope.png"></a>
             <h3>Quản lý môn thi</h3>
             <p>Trang quản lý danh sách môn thi của trường</p>
         </div>
         <div class="box">
-            <a href="http://examreg.com/hocphan/"><img src="/css/img/book.png"></a>
+            <a href="http://127.0.0.1:8080/hocphan/"><img src="/css/img/book.png"></a>
             <h3>Quản lý học phần</h3>
             <p>Trang quản lý danh sách học phần của trường</p>
         </div>
     </div>
     <div class="container">
         <div class="box">
-            <a href="http://examreg.com/kythi"><img src="/css/img/logo_brush.png"></a>
+            <a href="http://127.0.0.1:8080/kythi"><img src="/css/img/logo_brush.png"></a>
             <h3>Quản lý kỳ thi</h3>
             <p>Trang quản lý danh sách kỳ thi</p>
         </div>
         <div class="box">
-            <a href="http://examreg.com/quanlyphongthi"><img src="/css/img/door.png"></a>
+            <a href="http://127.0.0.1:8080/quanlyphongthi"><img src="/css/img/door.png"></a>
             <h3>Quản lý phòng thi</h3>
             <p>Trang quản lý danh sách phòng thi và thông tin từng phòng</p>
         </div>
         <div class="box">
-            <a href="http://examreg.com/account/view/ChangePassView.php"><img src="/css/img/clock.png"></a>
+            <a href="http://127.0.0.1:8080/account/view/ChangePassView.php"><img src="/css/img/clock.png"></a>
             <h3>Đổi mật khẩu</h3>
             <p>Cho phép thay đổi mật khẩu</p>
         </div>
